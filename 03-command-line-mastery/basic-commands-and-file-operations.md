@@ -178,5 +178,91 @@ You don't always need a text editor like `nano` or `vim` just to look at a file.
 * `head -n 10 file.txt` → Prints only the first 10 lines of a file.
 * `tail -n 10 file.txt` → Prints only the last 10 lines (incredibly useful for reading log files).
 
-#### 💡 Pro Tip - Tab Completion:
-Never type out full file paths! Type the first few letters of a directory or file and hit `TAB`. The shell will automatically complete the name for you, preventing typos and speeding up your workflow massively.
+> 💡 Pro Tip - Tab Completion:
+> Never type out full file paths! Type the first few letters of a directory or file and hit `TAB`. The shell will automatically complete the name for you, preventing typos and speeding up your workflow massively.
+
+## System Power & Session Management 
+
+Managing a server's power state from the terminal requires `root` (superuser) privileges because a sudden shutdown can corrupt databases or kick active users offline.
+
+### The `shutdown` Command (The Safe Way)
+The preferred industry method. It safely terminates processes, prevents new user logins, and broadcasts a warning message to anyone currently connected via SSH.
+
+![Shutdown](../assets/shutdown.png)
+
+* `sudo shutdown -h now`: Halts (turns off) the system immediately.
+* `sudo shutdown -r now`: Restarts the system immediately.
+* `sudo shutdown -r +15 "Server updating!"`: Restarts in 15 minutes and sends a broadcast message to all users.
+* `sudo shutdown -c`: Cancels a pending shutdown.
+
+> 💡 **Legacy Commands:** You might see older admins use `halt`, `poweroff`, or `reboot`. On modern Linux systems, these are actually just symbolic links that silently run `shutdown -h` or `shutdown -r` behind the scenes!
+
+---
+
+## Finding Applications & Binaries 
+
+When you type a command like `python3`, how does Linux know where the actual executable file is located? It searches through specific core directories (like `/bin`, `/usr/bin`, `/sbin`).
+
+![Locating apps](../assets/locating-applications.png)
+
+* **`which` (The Sniper):** Finds the exact file path of the executable that will run if you type that command. It only searches directories listed in your system's `$PATH` variable.
+  * *Example:* `which python3` outputs `/usr/bin/python3`.
+* **`whereis` (The Detective):** A broader search tool. If `which` fails, `whereis` looks beyond the `$PATH`. It locates the binary executable, the source code (if available), and the manual (`man`) pages for the program.
+  * *Example:* `whereis gcc` outputs the locations of the compiler, its libraries, and its documentation.
+
+---
+
+## File Linking: Hard vs. Soft (Symbolic) Links 
+
+Links allow you to create shortcuts to files. In backend engineering, this is heavily used to link configuration files across different directories without duplicating data.
+
+### A. Soft (Symbolic) Links (`symlinks`)
+
+![Softlink](../assets/soft-links.png)
+
+* **Command:** `ln -s /path/to/original /path/to/link`
+* **How it works:** This is the exact equivalent of a Windows "Desktop Shortcut". It is a tiny, separate file that simply points to the original file's location.
+* **The Catch:** If you delete or move the original file, the symlink breaks and becomes a "dangling link" (usually flashing red in your terminal).
+
+### B. Hard Links
+
+![Hardlink](../assets/hard-links.png)
+
+* **Command:** `ln /path/to/original /path/to/link` (Notice the lack of `-s`)
+* **How it works:** Hard links share the exact same **Inode number** as the original file. They are not shortcuts; they are literally a second door to the exact same data on the hard drive. 
+* **The Magic:** Because they point directly to the data (not the file name), you can completely delete the original file, and the data will still exist perfectly intact through the hard link!
+
+### Hard Links vs. Soft Links Cheat Sheet
+
+| Feature | Soft Link (`symlink`) | Hard Link |
+| :--- | :--- | :--- |
+| **Command** | `ln -s target link_name` | `ln target link_name` |
+| **Inode Number** | Different from the original | Identical to the original |
+| **Cross-Partition?** | ✅ Yes (Can link from `C:` to `D:`) | ❌ No (Must be on the exact same drive) |
+| **Link to Directories?** | ✅ Yes | ❌ No (Files only) |
+| **If Original is Deleted?** | Link breaks (Dangling) | Data survives! (Link acts as original) |
+
+
+## Advanced Directory Navigation (The Directory Stack) 
+
+While `cd` (Change Directory) is the standard way to navigate, it is inefficient if you need to temporarily jump to a deep configuration folder and then instantly return to your project workspace. For this, SysAdmins use the **Directory Stack**.
+
+Think of the directory stack exactly like a "Stack" data structure in C programming (LIFO - Last In, First Out).
+
+![pushd and popd](../assets/pushd-popd.png)
+
+* **`pushd [directory]` (Push Directory):** Saves your *current* location into memory (the stack) and then instantly teleports you to the new directory.
+* **`popd` (Pop Directory):** Removes the top location from memory and instantly teleports you back to it. 
+* **`dirs -v`:** Displays the numbered list of all the directories currently saved in your stack.
+
+### Real-World Backend Workflow Example
+Imagine you are coding your C project in `/home/student/bca-projects/c-atm-simulator/` and suddenly need to check a system log in `/var/log/nginx/`. 
+
+1. **Jump and Save:** 
+   `pushd /var/log/nginx/` 
+   *(You are now in the log folder, but your C project folder is saved in memory!)*
+2. **Do your work:** 
+   `cat error.log`
+3. **Instantly Return:** 
+   `popd` 
+   *(Boom! You are instantly teleported back to `/home/student/bca-projects/c-atm-simulator/` without having to type that massive path again!)*
