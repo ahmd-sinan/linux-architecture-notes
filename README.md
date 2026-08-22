@@ -30,7 +30,7 @@ The documentation here is organized into logical, numbered directories to keep t
 | Document | Description | Link |
 | :--- | :--- | :--- |
 | `basic-commands-and-file-operations.md` | The fundamental terminal environment and core file manipulation. | [Read Note](03-command-line-mastery/basic-commands-and-file-operations.md) |
-| `io-streams-and-terminal.md` | Deep dive into low-level data flow: File Descriptors (0,1,2), I/O Redirection, Piping (`xargs`, FIFOs), Here-Docs, PS1 customization, and Environment Variables (`$PATH`). | [Read Note](./03-Command-Line-Mastery/io-streams-and-terminal.md) |
+| `io-streams-and-terminal.md` | Deep dive into low-level data flow: File Descriptors (0,1,2), I/O Redirection, Piping (`xargs`, FIFOs), Here-Docs, PS1 customization, and Environment Variables (`$PATH`). | [Read Note](./03-command-line-mastery/io-streams-and-terminal.md) |
 | `package-management.md` | Dependency resolution (APT, DNF) and next-gen formats (Snaps, Flatpaks). | [Read Note](03-command-line-mastery/package-management.md) |
 | - | - | - |
 
