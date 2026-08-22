@@ -78,6 +78,7 @@ Before manipulating files, you must know how to move around the filesystem. Linu
 * **`mkdir` (Make Directory)**
     * `mkdir project` → Creates a single folder.
     * `mkdir -p backend/src/api` → Creates the target directory *and* any missing parent directories along the way.
+  ![Demo](../assets/nested-folder.png)
 
 ---
 
