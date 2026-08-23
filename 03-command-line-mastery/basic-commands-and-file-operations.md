@@ -298,4 +298,4 @@ Example command: `sudo umount /mnt/database` (Always do this before physically u
 * `fsck`: Scans and repairs corrupted drives. 
 Example command: `sudo fsck /dev/sdb1` (Crucial rule: Never run this on a drive while it is still mounted!).
 
-> Pro-Tip: The ultimate lifecycle flow in a real-world scenario would look exactly like this: `sudo fdisk /dev/sdc` ➡️ `sudo mkfs.ext4 /dev/sdc1` ➡️ `sudo mount /dev/sdc1 /mnt/backup`
+> Pro-Tip: The ultimate lifecycle flow in a real-world scenario would look exactly like this: `sudo fdisk /dev/sdc` (Partition) ➡️ `sudo mkfs.ext4 /dev/sdc1` (Format) ➡️ `sudo mount /dev/sdc1 /mnt/backup` (Attach).
