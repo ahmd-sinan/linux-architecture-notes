@@ -155,6 +155,9 @@ Before Googling how to use a command, system administrators rely on the built-in
 $ man ls
 ```
 
+> To see the numbered list of all your past commands, just type: `history`
+
+
 ## The Pipe (`|`) & Command Chaining
 The Pipe is the ultimate superpower of Unix-based systems. It allows you to connect multiple small, single-purpose programs together to perform massive, complex tasks.
 * **How it Works:** It takes the Standard Output (stdout) of the command on the left and literally "pipes" it in as the Standard Input (stdin) for the command on the right.
