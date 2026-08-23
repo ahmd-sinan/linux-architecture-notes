@@ -270,3 +270,29 @@ Imagine you are coding your C project in `/home/student/bca-projects/c-atm-simul
 3. **Instantly Return:** 
    `popd` 
    *(Boom! You are instantly teleported back to `/home/student/bca-projects/c-atm-simulator/` without having to type that massive path again!)*
+
+
+## Disk Commands 
+### Viewing & Analyzing Drives
+lsblk: Lists raw hardware. Example command: lsblk -f (Adding the -f flag is a pro-move that also shows you the filesystem types, like ext4 or ntfs, on each drive!).
+df -h: Checks free space on mounted drives. Example command: df -h / (This specifically checks exactly how much space is left on your main root operating system partition).
+du -sh: Calculates exact folder size. Example command: sudo du -sh /var/log (Perfect for checking exactly how bloated your server log folder has gotten without flooding your screen).
+
+### Partitioning & Formatting
+* `fdisk`: Carves up a raw drive into partitions. 
+Example command: `sudo fdisk /dev/sdb` (This opens the interactive menu to split up your second physical hard drive).
+
+* `mkfs`: Writes the filesystem structure. 
+Example command: `sudo mkfs.ext4 /dev/sdb1` (Formats the very first partition of the sdb drive to the standard Linux ext4 format).
+
+### Mounting & Unmounting
+* `mount`: Attaches a drive to your filesystem tree. 
+Example command: `sudo mount /dev/sdb1 /mnt/database` (Makes the new drive fully accessible by just opening the /mnt/database folder).
+* `umount`: Safely detaches the drive. 
+Example command: `sudo umount /mnt/database` (Always do this before physically unplugging a drive or shutting down the service!).
+
+### Maintenance & Repair
+* `fsck`: Scans and repairs corrupted drives. 
+Example command: `sudo fsck /dev/sdb1` (Crucial rule: Never run this on a drive while it is still mounted!).
+
+> Pro-Tip: The ultimate lifecycle flow in a real-world scenario would look exactly like this: `sudo fdisk /dev/sdc` ➡️ `sudo mkfs.ext4 /dev/sdc1` ➡️ `sudo mount /dev/sdc1 /mnt/backup`
