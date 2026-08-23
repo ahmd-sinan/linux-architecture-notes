@@ -274,16 +274,19 @@ Imagine you are coding your C project in `/home/student/bca-projects/c-atm-simul
 
 ## Disk Commands 
 ### Viewing & Analyzing Drives
-lsblk: Lists raw hardware. Example command: lsblk -f (Adding the -f flag is a pro-move that also shows you the filesystem types, like ext4 or ntfs, on each drive!).
-df -h: Checks free space on mounted drives. Example command: df -h / (This specifically checks exactly how much space is left on your main root operating system partition).
-du -sh: Calculates exact folder size. Example command: sudo du -sh /var/log (Perfect for checking exactly how bloated your server log folder has gotten without flooding your screen).
+* `lsblk`: Lists raw hardware. 
+Example command: `lsblk -f` (Adding the `-f` flag is a pro-move that also shows you the filesystem types, like `ext4` or `ntfs`, on each drive!).
+* `df -h`: Checks free space on mounted drives. 
+Example command: `df -h /` (This specifically checks exactly how much space is left on your main root operating system partition).
+* `du -sh`: Calculates exact folder size. 
+Example command: `sudo du -sh /var/log` (Perfect for checking exactly how bloated your server log folder has gotten without flooding your screen).
 
 ### Partitioning & Formatting
 * `fdisk`: Carves up a raw drive into partitions. 
 Example command: `sudo fdisk /dev/sdb` (This opens the interactive menu to split up your second physical hard drive).
 
 * `mkfs`: Writes the filesystem structure. 
-Example command: `sudo mkfs.ext4 /dev/sdb1` (Formats the very first partition of the sdb drive to the standard Linux ext4 format).
+Example command: `sudo mkfs.ext4 /dev/sdb1` (Formats the very first partition of the sdb drive to the standard Linux `ext4` format).
 
 ### Mounting & Unmounting
 * `mount`: Attaches a drive to your filesystem tree. 
