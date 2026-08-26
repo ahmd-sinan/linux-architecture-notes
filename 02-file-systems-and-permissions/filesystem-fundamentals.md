@@ -48,7 +48,7 @@ In Linux storage management, every drive undergoes a step-by-step initialization
 * **How it works:** Linux completely rejects the concept of isolated drive letters (like `C:` or `D:`). Instead of having separate domains, a disk is "mounted" to a specific directory called a **Mount Point**. 
 * **The Result:** If you mount a 2TB hard drive (`/dev/sdb1`) to `/mnt/database`, any file saved inside `/mnt/database` is physically written to that second drive. The user simply experiences one massive, unified file tree (`/`) regardless of how many physical disks are attached!
 * **Persistence (`/etc/fstab`):** Manual mounts disappear when the computer restarts. To make a mount permanent, backend engineers add the drive's UUID to the `/etc/fstab` (File System Table) configuration file.
-> 💻 **SysAdmin Command:** Run `sudo mount /dev/sdb1 /mnt/database` to attach the drive, and `df -h` to see all active mounted drives and their free space.
+> 💻 **SysAdmin Command:** Run `sudo mount /dev/sdb1 /mnt/database` to attach the drive, and `df -h` to see all active mounted drives and their free space. to deattach type `sudo umount /mnt/database`
 
 ## Cloud Context: LVM (Logical Volume Management) ☁️
 In cloud engineering, physical partitions are often too rigid. You can't easily resize them while the server is running. 
