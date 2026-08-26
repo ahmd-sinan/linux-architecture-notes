@@ -25,7 +25,7 @@ If you look under the hood in C programming (`<stdio.h>`), these are the exact s
       ├────── (1) stdout ─────> [ Screen ]
       │
       └────── (2) stderr ─────> [ Screen ]
-
+```
 > **Why separate `stdout` and `stderr`?** 
 > If a script generates 10,000 lines of successful data and 2 error messages, separating the streams allows a SysAdmin to log the clean data into a database while sending the errors to a separate monitoring dashboard.
 
