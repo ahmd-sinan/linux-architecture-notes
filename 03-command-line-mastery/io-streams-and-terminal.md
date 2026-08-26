@@ -14,6 +14,18 @@ If you look under the hood in C programming (`<stdio.h>`), these are the exact s
 | **`stdout`** | `1` | `/dev/fd/1` | **Standard Output:** The default destination for successful command execution results. Usually points to your terminal window. |
 | **`stderr`** | `2` | `/dev/fd/2` | **Standard Error:** A completely isolated stream dedicated *only* to diagnostic, warning, and error messages. |
 
+**The Visual Architecture:**
+```text
+  [Keyboard]
+      │
+ (0) stdin 
+      ↓
+ [ COMMAND ]
+      │
+      ├────── (1) stdout ─────> [ Screen ]
+      │
+      └────── (2) stderr ─────> [ Screen ]
+
 > **Why separate `stdout` and `stderr`?** 
 > If a script generates 10,000 lines of successful data and 2 error messages, separating the streams allows a SysAdmin to log the clean data into a database while sending the errors to a separate monitoring dashboard.
 
@@ -21,19 +33,23 @@ If you look under the hood in C programming (`<stdio.h>`), these are the exact s
 
 ## I/O Redirection (Routing Data) 
 
-Redirection hijacks these file descriptors, allowing you to route data into files or hardware devices without it ever touching your screen.
+Redirection (`>`, `>>`) hijacks these file descriptors, allowing you to route data into files or hardware devices without it ever touching your screen.
 
 ### Output Redirection (`stdout`)
 * **`>` (Overwrite):** Routes FD `1` to a file. 
   * *Example:* `echo "Hello" > file.txt`
+    *Visual Flow:* `echo  →  stdout (1)  →  file.txt`
   * 🛡️ **SysAdmin Safety Net (`noclobber`):** Overwriting can accidentally destroy critical server files. You can type `set -o noclobber` in your terminal to block `>` from overwriting existing files! (You can forcefully override this protection using `>|`).
 * **`>>` (Append):** Safely adds new output to the absolute bottom of a file without touching existing data. Essential for continuously running system logs.
+  `$ echo "New entry" >> system.log`
 
 ### Error Redirection (`stderr`)
 Standard output redirection (`>`) silently ignores errors because it only targets FD `1`. You must explicitly target FD `2`.
 * **Redirect ONLY Errors:** `find / -name "config" 2> error.log`
 * **Redirect Output to one file, Errors to another:** 
   `find / -name "config" > success.log 2> error.log`
+
+
 
 ### The "Merge" (Combining Streams)
 Often, you want a chronological log of everything that happened—both successes and failures.
@@ -48,8 +64,13 @@ Often, you want a chronological log of everything that happened—both successes
 ---
 
 ## Pipes (`|`) & Advanced Data Flow 
+While > sends output to a file, the Pipe | sends output to another program. It connects the stdout of the first command directly into the stdin of the second command using system RAM.
+Means:
+  The Pipe `|` takes the `stdout` (FD 1) of the left command and feeds it directly into the `stdin` (FD 0) of the right command. This happens in the system's RAM (via memory buffers), meaning no hard drive I/O bottlenecks occur.
 
-The Pipe `|` takes the `stdout` (FD 1) of the left command and feeds it directly into the `stdin` (FD 0) of the right command. This happens in the system's RAM (via memory buffers), meaning no hard drive I/O bottlenecks occur.
+
+**The Visual Flow (ls | sort | head):**
+  [ ls ]  →  stdout  →  [ | ]  →  stdin  →  [ sort ]  →  stdout  →  [ | ]  →  stdin  →  [ head ]  →  Screen
 
 ### Real-World Chaining Examples:
 ```bash
@@ -67,10 +88,10 @@ Pipes only work if the receiving command is programmed to accept `stdin`. Many c
   `find . -name "*.tmp" | xargs rm`
 
 ### Tracking Piped Errors (`PIPESTATUS`)
-If you run `command1 | command2` and `command1` fails, the terminal will still return a success code because `command2` technically finished successfully. To debug a pipeline in a bash script, you must check the `$PIPESTATUS` array, which holds the exit code of every single command in the chain!
+If you run `command1 | command2` and `command1` fails, the terminal will still return a success code because `command2` technically finished successfully. typing `echo "${PIPESTATUS[@]}"` reveals an array of exit codes for every individual command in the chain, allowing you to find exactly where it broke.
 
 ### Named Pipes (FIFOs)
-Standard pipes `|` are temporary and disappear instantly. You can actually create a *physical* pipe on your hard drive using the `mkfifo` command. One terminal window can push data into this file, and it will pause until another terminal window reads the data out of it!
+Standard pipes are temporary connections. The `mkfifo` command creates a "Named Pipe"—a physical file on the hard drive that acts as a tunnel. One terminal process can write into it, and it will pause execution until a completely different process reads the data out of the other side.
 
 ---
 
@@ -107,10 +128,13 @@ The system variable `PS1` (Prompt String 1) dictates exactly what text and data 
 * `\u`: Current Username.
 * `\h`: Hostname of the machine.
 * `\w`: Absolute current working directory path.
-* `\W`: Only the current folder name (keeps the prompt short).
+* `\W`: Only the current folder name (working directory).
 * `\t`: Current time in 24-hour HH:MM:SS format.
 * `\n`: Injects a Line Break (allowing for multi-line prompts!).
-* `\$`: **The Privilege Indicator.** Prints `$` for standard users, but automatically switches to `#` if you escalate to `root`.
+* `\$`: **The Privilege Indicator.** 
+
+**The Warning Symbol (`$` vs `#`):**
+If you are logged in as a normal user, the prompt ends in `$`. If you switch to the `root` user, it changes to `#`. This is a visual alarm indicating you now have system-destroying privileges.
 
 ### The Ultimate SysAdmin Prompt Example
 You can combine colors, line breaks, and time tracking into a single prompt string:
@@ -132,6 +156,11 @@ If you change `PS1` in the terminal, it disappears when you close the window. To
 Sometimes you want to redirect the output into a file to save it, but you *also* want to see it live on your terminal screen. Standard redirection (`>`) hides the output from your screen. The `tee` command solves this.
 
 It acts like a T-junction in a physical pipe: the data stream flows in, and `tee` splits it in two directions—one to the screen (`stdout`), and one to a file.
+```text
+              ┌─→ file.txt
+ command  →  tee 
+              └─→ Screen
+```
 
 * **Standard `tee` (Overwrite):** 
   `$ ping google.com | tee ping_results.log`
