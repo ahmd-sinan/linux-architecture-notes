@@ -69,8 +69,8 @@ Means:
   The Pipe `|` takes the `stdout` (FD 1) of the left command and feeds it directly into the `stdin` (FD 0) of the right command. This happens in the system's RAM (via memory buffers), meaning no hard drive I/O bottlenecks occur.
 
 
-**The Visual Flow (ls | sort | head):**
-  [ ls ]  →  stdout  →  [ | ]  →  stdin  →  [ sort ]  →  stdout  →  [ | ]  →  stdin  →  [ head ]  →  Screen
+**The Visual Flow (`ls | sort | head`):**
+  * `[ ls ]  →  stdout  →  [ | ]  →  stdin  →  [ sort ]  →  stdout  →  [ | ]  →  stdin  →  [ head ]  →  Screen`
 
 ### Real-World Chaining Examples:
 ```bash
