@@ -38,7 +38,7 @@ Redirection (`>`, `>>`) hijacks these file descriptors, allowing you to route da
 ### Output Redirection (`stdout`)
 * **`>` (Overwrite):** Routes FD `1` to a file. 
   * *Example:* `echo "Hello" > file.txt`
-    *Visual Flow:* `echo  →  stdout (1)  →  file.txt`
+  * *Visual Flow:* `echo  →  stdout (1)  →  file.txt`
   * 🛡️ **SysAdmin Safety Net (`noclobber`):** Overwriting can accidentally destroy critical server files. You can type `set -o noclobber` in your terminal to block `>` from overwriting existing files! (You can forcefully override this protection using `>|`).
 * **`>>` (Append):** Safely adds new output to the absolute bottom of a file without touching existing data. Essential for continuously running system logs.
   `$ echo "New entry" >> system.log`
