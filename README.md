@@ -30,8 +30,9 @@ The documentation here is organized into logical, numbered directories to keep t
 | Document | Description | Link |
 | :--- | :--- | :--- |
 | `basic-commands-and-file-operations.md` | The fundamental terminal environment and core file manipulation. | [Read Note](03-command-line-mastery/basic-commands-and-file-operations.md) |
-| `io-streams-and-terminal.md` | Deep dive into low-level data flow: File Descriptors (0,1,2), I/O Redirection, Piping (`xargs`, FIFOs), Here-Docs, PS1 customization, and Environment Variables (`$PATH`). | [Read Note](./03-command-line-mastery/io-streams-and-terminal.md) |
 | `package-management.md` | Dependency resolution (APT, DNF) and next-gen formats (Snaps, Flatpaks). | [Read Note](03-command-line-mastery/package-management.md) |
+| `io-streams-and-terminal.md` | Deep dive into low-level data flow: File Descriptors (0,1,2), I/O Redirection, Piping (`xargs`, FIFOs), Here-Docs, PS1 customization, and Environment Variables (`$PATH`). | [Read Note](./03-command-line-mastery/io-streams-and-terminal.md) |
+| `file-searching-and-filtering.md` | Master filesystem navigation and text filtering. Covers database-driven searches (`locate`), advanced `grep` pipelines, shell wildcards, and real-time deep scanning with `find` (security auditing, logical operators, and `-exec` automation). | [Read Note](./03-command-line-mastery/file-searching-and-filtering.md) |
 | - | - | - |
 
 ### 📁 `/04-Process-and-Service-Management`
