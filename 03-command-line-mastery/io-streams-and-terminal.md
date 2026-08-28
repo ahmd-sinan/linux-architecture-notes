@@ -25,7 +25,7 @@ If you look under the hood in C programming (`<stdio.h>`), these are the exact s
       ├────── (1) stdout ─────> [ Screen ]
       │
       └────── (2) stderr ─────> [ Screen ]
-
+```
 > **Why separate `stdout` and `stderr`?** 
 > If a script generates 10,000 lines of successful data and 2 error messages, separating the streams allows a SysAdmin to log the clean data into a database while sending the errors to a separate monitoring dashboard.
 
@@ -38,7 +38,7 @@ Redirection (`>`, `>>`) hijacks these file descriptors, allowing you to route da
 ### Output Redirection (`stdout`)
 * **`>` (Overwrite):** Routes FD `1` to a file. 
   * *Example:* `echo "Hello" > file.txt`
-    *Visual Flow:* `echo  →  stdout (1)  →  file.txt`
+  * *Visual Flow:* `echo  →  stdout (1)  →  file.txt`
   * 🛡️ **SysAdmin Safety Net (`noclobber`):** Overwriting can accidentally destroy critical server files. You can type `set -o noclobber` in your terminal to block `>` from overwriting existing files! (You can forcefully override this protection using `>|`).
 * **`>>` (Append):** Safely adds new output to the absolute bottom of a file without touching existing data. Essential for continuously running system logs.
   `$ echo "New entry" >> system.log`
@@ -69,8 +69,8 @@ Means:
   The Pipe `|` takes the `stdout` (FD 1) of the left command and feeds it directly into the `stdin` (FD 0) of the right command. This happens in the system's RAM (via memory buffers), meaning no hard drive I/O bottlenecks occur.
 
 
-**The Visual Flow (ls | sort | head):**
-  [ ls ]  →  stdout  →  [ | ]  →  stdin  →  [ sort ]  →  stdout  →  [ | ]  →  stdin  →  [ head ]  →  Screen
+**The Visual Flow (`ls | sort | head`):**
+  * `[ ls ]  →  stdout  →  [ | ]  →  stdin  →  [ sort ]  →  stdout  →  [ | ]  →  stdin  →  [ head ]  →  Screen`
 
 ### Real-World Chaining Examples:
 ```bash
