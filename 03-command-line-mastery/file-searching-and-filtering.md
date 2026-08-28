@@ -55,6 +55,17 @@ When you do not know the exact name of a file, you use wildcards. These are spec
 | **`[set]`** | Matches **one** character from a specific group. | <ul><li>`$ ls file_[abc].out`</li><li>`ls server_[1-3].log`</li></ul> | <ul><li>Finds `file_a.out`, `file_b.out`, and `file_c.out`, but nothing else.</li><li>Matches `server_1.log`, `server_2.log`, `server_3.log`</li></ul> |
 | **`[!set]`** | Matches one character that is **NOT** in the group. | <ul><li>`$ ls file_[!abc].txt`</li><li>`ls [!0-9]*`</li></ul> | <ul><li>Finds `file_1.txt`, but ignores anything with a, b, or c in that spot.</li><li>Matches any file that does NOT start with a number</li></ul> |
 
+### POSIX Character Classes
+Instead of typing `[a-zA-Z0-9]`, Linux provides standardized classes inside brackets:
+* `[[:alpha:]]` : Matches any letter.
+* `[[:digit:]]` : Matches any number.
+* `[[:space:]]` : Matches whitespace.
+
+### Brace Expansion (Mass Generation)
+While globbing *searches* for files, brace expansion *generates* strings. It is a massive time saver for creating bulk directories or files.
+* **Lists:** `mkdir {src,bin,lib,docs}` *(Instantly creates 4 folders)*.
+* **Ranges:** `touch file_{1..100}.txt` *(Instantly creates 100 numbered files!)*.
+
 > ⚠️ **Globbing vs. Regex:** Wildcards (Globbing) are used specifically for matching *filenames*. This is different from Regular Expressions (Regex), which are used by tools like `grep` to match complex patterns *inside* text files. 
 
 ---

@@ -95,31 +95,6 @@ Standard pipes are temporary connections. The `mkfifo` command creates a "Named 
 
 ---
 
-## Wildcards (Globbing) & Expansion 
-
-Wildcards (technically known as "Globbing" in Linux) allow you to pattern-match files instantly.
-
-### Standard Globbing
-| Wildcard | Function | Industry Example |
-| :--- | :--- | :--- |
-| `?` | Matches exactly **one** single character. | `ls data_?.csv` (Finds `data_1.csv`, but not `data_10.csv`) |
-| `*` | Matches **any** string of characters (or none). | `rm *.tmp` (Deletes absolutely any file ending in `.tmp`) |
-| `[set]` | Matches **any one** character inside the brackets. | `ls server_[1-3].log` (Matches `server_1.log`, `server_2.log`, `server_3.log`). |
-| `[!set]` | Matches any character **not** in the set. | `ls [!0-9]*` (Matches any file that does NOT start with a number). |
-
-### POSIX Character Classes
-Instead of typing `[a-zA-Z0-9]`, Linux provides standardized classes inside brackets:
-* `[[:alpha:]]` : Matches any letter.
-* `[[:digit:]]` : Matches any number.
-* `[[:space:]]` : Matches whitespace.
-
-### Brace Expansion (Mass Generation)
-While globbing *searches* for files, brace expansion *generates* strings. It is a massive time saver for creating bulk directories or files.
-* **Lists:** `mkdir {src,bin,lib,docs}` *(Instantly creates 4 folders)*.
-* **Ranges:** `touch file_{1..100}.txt` *(Instantly creates 100 numbered files!)*.
-
----
-
 ## The Command Prompt (PS1) Deep Dive 
 
 The system variable `PS1` (Prompt String 1) dictates exactly what text and data appear before your cursor. In a production environment with hundreds of servers, a highly customized PS1 prevents devastating mistakes (like dropping a production database because you thought you were on a test server).
