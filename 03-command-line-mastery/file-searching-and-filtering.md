@@ -11,7 +11,7 @@ The `locate` command is built for absolute speed. Instead of scanning your physi
 * **Refreshing the Database:** Most Linux systems automatically update this database once a day via a background scheduled task (`cron`). To force an immediate update manually, run:
   `$ sudo updatedb`
 
-![Locate](locate.png)
+![Locate](./assets/locate.png)
 
 ### The Exclusion Rules (`updatedb.conf`)
 You might notice that `locate` never finds files inside your `/tmp` directory or on external USB drives. This is intentional. The database configuration file (located at `/etc/updatedb.conf`) tells the system to ignore temporary folders and network drives to save processing power and maintain speed.
@@ -51,9 +51,9 @@ When you do not know the exact name of a file, you use wildcards. These are spec
 | Wildcard | What it Does | Example Usage | Result |
 | :--- | :--- | :--- | :--- |
 | **`?`** | Matches exactly **one** single character. | <ul><li>`$ ls ba?.out`</li><li>`ls data_?.csv`</li></ul> | <ul><li>Finds a 3-letter file starting with "ba" and ending in ".out" (e.g., `bat.out`).</li><li>Finds `data_1.csv`, but not `data_10.csv`</li></ul> |
-| **`*`** | Matches a string of **any** length (or none). | `$ ls *.out` | Finds absolutely any file that ends with the ".out" extension. |
-| **`[set]`** | Matches **one** character from a specific group. | `$ ls file_[abc].out` | Finds `file_a.out`, `file_b.out`, and `file_c.out`, but nothing else. |
-| **`[!set]`** | Matches one character that is **NOT** in the group. | `$ ls file_[!abc].txt` | Finds `file_1.txt`, but ignores anything with a, b, or c in that spot. |
+| **`*`** | Matches a string of **any** length (or none). | <ul><li>`$ ls *.out`</li><li>`rm *.tmp`</li></ul> | <ul><li>Finds absolutely any file that ends with the ".out" extension.</li><li>Deletes absolutely any file ending in `.tmp`</li></ul> |
+| **`[set]`** | Matches **one** character from a specific group. | <ul><li>`$ ls file_[abc].out`</li><li>`ls server_[1-3].log`</li></ul> | <ul><li>Finds `file_a.out`, `file_b.out`, and `file_c.out`, but nothing else.</li><li>Matches `server_1.log`, `server_2.log`, `server_3.log`</li></ul> |
+| **`[!set]`** | Matches one character that is **NOT** in the group. | <ul><li>`$ ls file_[!abc].txt`</li><li>`ls [!0-9]*`</li></ul> | <ul><li>Finds `file_1.txt`, but ignores anything with a, b, or c in that spot.</li><li>Matches any file that does NOT start with a number</li></ul> |
 
 > ⚠️ **Globbing vs. Regex:** Wildcards (Globbing) are used specifically for matching *filenames*. This is different from Regular Expressions (Regex), which are used by tools like `grep` to match complex patterns *inside* text files. 
 
@@ -63,7 +63,7 @@ When you do not know the exact name of a file, you use wildcards. These are spec
 
 Unlike `locate`, the `find` command does not use a database. It actively digs through your live filesystem tree, starting from a directory you specify and descending into every single sub-folder. It is slower, but 100% accurate and incredibly granular.
 
-![Find Utility](find-to-locate.png)
+![Find Utility](./assets/find-utility.png)
 
 ### Basic Search Options:
 * **`-name`:** Searches for an exact filename match. 
@@ -72,7 +72,7 @@ Unlike `locate`, the `find` command does not use a database. It actively digs th
 * **`-type`:** Restricts your search to a specific kind of object (`d` for directories, `f` for files, `l` for symbolic links).
   `$ find /usr -type d -name gcc` *(Only looks for directories named "gcc")*
 
-![Find Output](find.png)
+![Find Output](./assets/find.png)
 
 ### Depth Control
 Sometimes you only want to search the current folder and prevent `find` from digging into thousands of nested sub-directories. 
@@ -107,7 +107,7 @@ You can combine search rules to create highly specific queries.
 ### The `-exec` Action (Automation)
 You do not just have to look at the files you find; you can command Linux to execute a command on them immediately.
 
-![Finding and Removing](finding-and-removing-files.png)
+![Finding and Removing](./assets/finding-and-removing-files.png)
 
 **Syntax Breakdown:** 
 `$ find . -name "*.swp" -exec rm {} ';'`
