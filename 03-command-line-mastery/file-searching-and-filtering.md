@@ -11,7 +11,7 @@ The `locate` command is built for absolute speed. Instead of scanning your physi
 * **Refreshing the Database:** Most Linux systems automatically update this database once a day via a background scheduled task (`cron`). To force an immediate update manually, run:
   `$ sudo updatedb`
 
-![Locate](./assets/locate.png)
+![Locate](../assets/locate.png)
 
 ### The Exclusion Rules (`updatedb.conf`)
 You might notice that `locate` never finds files inside your `/tmp` directory or on external USB drives. This is intentional. The database configuration file (located at `/etc/updatedb.conf`) tells the system to ignore temporary folders and network drives to save processing power and maintain speed.
@@ -63,7 +63,7 @@ When you do not know the exact name of a file, you use wildcards. These are spec
 
 Unlike `locate`, the `find` command does not use a database. It actively digs through your live filesystem tree, starting from a directory you specify and descending into every single sub-folder. It is slower, but 100% accurate and incredibly granular.
 
-![Find Utility](./assets/find-utility.png)
+![Find Utility](../assets/find-utility.png)
 
 ### Basic Search Options:
 * **`-name`:** Searches for an exact filename match. 
@@ -72,7 +72,7 @@ Unlike `locate`, the `find` command does not use a database. It actively digs th
 * **`-type`:** Restricts your search to a specific kind of object (`d` for directories, `f` for files, `l` for symbolic links).
   `$ find /usr -type d -name gcc` *(Only looks for directories named "gcc")*
 
-![Find Output](./assets/find.png)
+![Find Output](../assets/find.png)
 
 ### Depth Control
 Sometimes you only want to search the current folder and prevent `find` from digging into thousands of nested sub-directories. 
@@ -107,7 +107,7 @@ You can combine search rules to create highly specific queries.
 ### The `-exec` Action (Automation)
 You do not just have to look at the files you find; you can command Linux to execute a command on them immediately.
 
-![Finding and Removing](./assets/finding-and-removing-files.png)
+![Finding and Removing](../assets/finding-and-removing-files.png)
 
 **Syntax Breakdown:** 
 `$ find . -name "*.swp" -exec rm {} ';'`
