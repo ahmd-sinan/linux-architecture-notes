@@ -8,7 +8,7 @@ This repository serves as my structured, deep-dive personal wiki, actively docum
 As a developer focusing on cloud and backend engineering, having a deep, foundational understanding of the OS is critical. This repository is a living, continuously expanding document tracking my complete journey into mastering Linux from the ground up. It is structured like a professional technical handbook, covering everything from core kernel architecture to advanced system administration.
 
 ## 📂 Repository Structure
-The documentation here is organized into logical, numbered directories to keep topics isolated and easy to navigate as the repository scales.....
+The documentation here is organized into logical, numbered directories to keep topics isolated and easy to navigate as the repository scales.
 
 ### 📁 `/01-System-Architecture-and-Hardware`
 | Document | Description | Link |
