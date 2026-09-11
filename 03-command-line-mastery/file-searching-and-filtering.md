@@ -74,7 +74,7 @@ While globbing *searches* for files, brace expansion *generates* strings. It is 
 
 Unlike `locate`, the `find` command does not use a database. It actively digs through your live filesystem tree, starting from a directory you specify and descending into every single sub-folder. It is slower, but 100% accurate and incredibly granular.
 
-![Find Utility](../assets/find-utility.png)
+![Find](../assets/find.png)
 
 ### Basic Search Options:
 * **`-name`:** Searches for an exact filename match. 
@@ -82,8 +82,8 @@ Unlike `locate`, the `find` command does not use a database. It actively digs th
 * **`-iname`:** Ignores case sensitivity (matches "gcc", "GCC", or "GcC").
 * **`-type`:** Restricts your search to a specific kind of object (`d` for directories, `f` for files, `l` for symbolic links).
   `$ find /usr -type d -name gcc` *(Only looks for directories named "gcc")*
-
-![Find Output](../assets/find.png)
+  
+![Find Output](../assets/using-find.png)
 
 ### Depth Control
 Sometimes you only want to search the current folder and prevent `find` from digging into thousands of nested sub-directories. 
@@ -149,6 +149,8 @@ If you are deleting files, use `-ok` instead of `-exec`. It performs the exact s
 ### Searching by Size (`-size`)
 Check the file size using `c` (bytes), `k` (kilobytes), `M` (Megabytes), or `G` (Gigabytes).
 `$ find /var/log -size +50M -exec rm {} ';'` *(Finds and removes log files strictly larger than 50 Megabytes).*
+
+![Find Date and Time](../assets/find-based-time-and-size.png)
 
 ---
 
