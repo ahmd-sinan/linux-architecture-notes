@@ -63,8 +63,6 @@ This separation is critical because different components often share the exact s
 
 ### Section Breakdown Reference Table
 
-![Manual Sections](../assets/manual-sections.png)
-
 | Section | Contents | Professional Examples |
 | :--- | :--- | :--- |
 | **1** | Executable programs and shell commands | `ls`, `cp`, `grep` |
@@ -146,7 +144,12 @@ Beyond the terminal, every major Linux desktop environment (DE) includes a built
 ### Launching from the Terminal
 Instead of hunting through application menus, you can launch these graphical help browsers directly from the command line:
 *   **GNOME:** `$ yelp` (or `$ gnome-help`)
+
+![GNOME Help](../assets/GNOME-help.png)
+
 *   **KDE Plasma:** `$ khelpcenter`
+
+![KDE Help](../assets/KDE-help.png)
 
 ### The `F1` Universal Shortcut
 Just as in the Windows and macOS ecosystems, pressing the `F1` key while using many Linux desktop applications will instantly open the software's dedicated help page. While support varies by application, it is the fastest way to access GUI-specific documentation.
