@@ -6,7 +6,7 @@ Consulting help documentation is an everyday part of working in Linux, not a sig
 
 Linux distributions gather documentation from various software sources and present it in a consistent format. There are four primary sources of documentation on a standard Linux system:
 
-![Documentation Sources](linux-doc-sources.png)
+![Documentation Sources](../assets/linux-doc-sources.png)
 
 *   **The `man` pages:** Short for "manual pages," this is the classic and most widely used reference for commands, configuration files, and programming interfaces.
 *   **GNU Info:** A more structured, cross-linked documentation system used predominantly by GNU tools.
@@ -35,7 +35,7 @@ Because `man` pages contain massive amounts of detail, the output is piped throu
 
 Sometimes you know what you want to achieve, but you don't know the exact command name. The `man` utility includes built-in search helpers.
 
-![Man Search](man-page.png)
+![Man Search](../assets/man-page.png)
 
 ### Exact Match Search (`-f`)
 If you want a brief description of a command's purpose, use the `-f` flag (which functions identically to the `whatis` command). It lists available pages that match the name exactly.
@@ -55,15 +55,13 @@ The manual is incredibly vast, so it is organized into numbered sections, from 1
 
 This separation is critical because different components often share the exact same name. For example, there is a C programming function named `socket` and a core Linux concept named `socket`. To ensure you get the right documentation, you place the section number before the command.
 
-![Accessing Different Sections](accessing-different-man-pages.png)
+![Accessing Different Sections](../assets/accessing-different-man-pages.png)
 
 *   `$ man 7 socket`: Opens the Linux Programmer's Manual overview for the socket interface.
 *   `$ man 2 socket`: Opens the specific kernel system call for creating an endpoint for communication.
 *   `$ man -a socket`: The `-a` flag forces the manual to display *every* page matching that name, opening them one after another across all sections.
 
 ### Section Breakdown Reference Table
-
-![Manual Sections](manual-sections.png)
 
 | Section | Contents | Professional Examples |
 | :--- | :--- | :--- |
@@ -89,7 +87,7 @@ Where a `man` page is essentially one long, scrollable text document, an Info ma
 *   **Top-Level Directory:** Run `info` without any arguments to open the master tree of all available topics.
 *   **Direct Access:** Type `info` followed by the command name (e.g., `$ info ls`) to jump directly to a specific utility.
 
-![GNU Info Menu](top-level-main-menu-of-gnu-info.png)
+![GNU Info Menu](../assets/top-level-main-menu-of-gnu-info.png)
 
 ### Info Page Structure & Navigation
 Each page in the Info system is called a **Node**. Nodes act as the chapters and sections of the manual, arranged in a hierarchical tree structure. To jump between nodes, you look for specific link formats:
@@ -146,7 +144,12 @@ Beyond the terminal, every major Linux desktop environment (DE) includes a built
 ### Launching from the Terminal
 Instead of hunting through application menus, you can launch these graphical help browsers directly from the command line:
 *   **GNOME:** `$ yelp` (or `$ gnome-help`)
+
+![GNOME Help](../assets/GNOME-help.png)
+
 *   **KDE Plasma:** `$ khelpcenter`
+
+![KDE Help](../assets/KDE-help.png)
 
 ### The `F1` Universal Shortcut
 Just as in the Windows and macOS ecosystems, pressing the `F1` key while using many Linux desktop applications will instantly open the software's dedicated help page. While support varies by application, it is the fastest way to access GUI-specific documentation.
@@ -159,7 +162,7 @@ When you install software via a package manager (`apt`, `dnf`), the system does 
 
 You can find these files stored locally in the `/usr/share/doc` directory, organized neatly into subdirectories named after each specific package.
 
-![Package Documentation](package-documentation.png)
+![Package Documentation](../assets/package-documentation.png)
 
 Browsing these folders is a highly recommended SysAdmin practice. It is the best place to discover `README` files, version changelogs, and—most importantly—**sample configuration files** that are not included in the standard `man` pages.
 
