@@ -16,7 +16,7 @@ A true text editor deals exclusively in raw characters. It saves exactly what yo
 ### The Editor Landscape
 Because text editing is so central to the OS, Linux provides a wide variety of editors. They range from highly approachable GUI tools to infinitely customizable terminal environments.
 
-![Linux Text Editors](image.png)
+![Linux Text Editors](../assets/text-editors.png)
 
 *   **Basic Editors:** Ideal for quick edits and require almost no prior experience.
     *   **Nano:** A straightforward, beginner-friendly editor that runs directly in the terminal. It permanently displays its core commands at the bottom of the screen, requiring almost zero memorization before you can start. 
