@@ -117,7 +117,9 @@ Knowing just enough `vi` to open a file, make a change, and save it is an essent
 Unlike a standard word processor or `nano`, **`vi` is modal**. It has completely separate modes for entering text and for issuing commands. The exact same keystroke (like pressing the letter "d") does entirely different things depending on which mode you are currently in. 
 
 Understanding these three modes is the key to mastering `vim`:
-![vi commands](..assets/vi-commands-and-shortcuts.png)
+
+![vi Commands](../assets/vi-commands-and-shortcuts.png)
+
 1.  **Command Mode (Home Base):** The default mode when `vi` opens. Keystrokes here are interpreted as navigation and editing commands (move the cursor, delete a line, copy text), not as literal text to be typed on the screen.
 2.  **Insert Mode:** The mode where you actually type text into the file. You enter it deliberately from Command mode (e.g., by pressing `i`), and you exit it by pressing **`Esc`**.
 3.  **Line/Execution Mode:** Used for low-level management commands typed at the absolute bottom of the screen. You enter it from Command mode by typing a colon (`:`).
