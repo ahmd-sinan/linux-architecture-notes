@@ -47,8 +47,8 @@ This is the central nervous system of your server. These directories manage how 
 
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
-| **`/etc`** | The central hub for global system configurations. Almost everything here is a plain text file you can edit with `nano` or `vim`. | `/etc/passwd`, `/etc/fstab` | The Registry |
-| **`/var`** | Variable data. Unlike `/usr` (which is static), files here are constantly changing, growing, and adapting while the system runs. | `/var/www/html` (Web files) | `C:\ProgramData` |
+| **`/etc`** | The central hub for global system configurations. : the settings that control how the system and its services behave. Almost everything here is a plain text file you can edit with `nano` or `vim`. | `/etc/passwd`, `/etc/fstab` | The Registry |
+| **`/var`** | `/var` (short for variable) holds files whose contents are expected to grow and change as the system runs. Classic examples include log files under `/var/log`, which record what the system and its services are doing; this is often the first place you look when troubleshooting. | `/var/www/html` (Web files) | `C:\ProgramData` |
 | **`/var/log`** | **(Extra)** The master log directory. If an application crashes, or a hacker tries to SSH into your server, it is logged here. | `/var/log/syslog` | Event Viewer Logs |
 | **`/var/cache`** | **(Extra)** Cached data from applications (like the `apt` package manager storing downloaded `.deb` files). | `/var/cache/apt/` | `AppData` Caches |
 | **`/var/spool`** | **(Extra)** Queued tasks waiting to be processed, like print jobs or scheduled `cron` jobs. | `/var/spool/cron` | `C:\Windows\System32\spool` |
@@ -60,7 +60,12 @@ These directories don't physically exist on your hard drive! They are virtual fi
 | :--- | :--- | :--- | :--- |
 | **`/dev`** | Device files. Physical hardware components are interacted with as if they were files. | `/dev/sda1` (Hard drive) | Device Manager |
 | **`/dev/null`** | **(Extra)** The Black Hole. Any output routed here is instantly deleted forever. Used to silence script errors. | `2> /dev/null` | *None* |
-| **`/proc`** | A RAM-based virtual filesystem reporting live data about active process IDs and kernel status. | `/proc/cpuinfo` | Task Manager |
+| **`/proc`** | A RAM-based virtual filesystem reporting live data about active process IDs and kernel status. | <ul> <li> `/proc/cpuinfo` — details about the CPU </li>
+<li> `/proc/meminfo` — current memory usage </li>
+<li> `/proc/version` — the running kernel and OS release information </li>
+<li> `/proc/mounts` — the filesystems currently mounted (you used this in Lab 10.1) </li>
+<li> `/proc/<PID>` — a directory for every running process, named by its process ID (the same PIDs you saw in ps and top sections in the previous chapter), containing live details about it </li>
+<li> It also contains `/proc/sys`, a special area exposing tunable kernel settings. Because all of this information is generated only when you ask for it, `/proc` takes up no disk space at all. </li> </ul>  | Task Manager |
 | **`/sys`** | A modern virtual filesystem linking directly to hardware devices. Sysadmins use it to control power states and CPUs. | `/sys/class/net/` | Device Manager Properties |
 | **`/run`** | **(Extra)** Ephemeral runtime data (PIDs, lock files) generated since the machine was turned on. | `/run/systemd/` | *None (Kept in RAM)* |
 
