@@ -1,4 +1,4 @@
-# Linux Text Editors: Master Guide 
+# Linux Text Editors
 
 If there is one habit that quietly runs through everything you do in Linux, it is editing text. On Linux, the vast majority of the system—from background services to automation scripts—is configured entirely through plain-text files (like those found in the `/etc` directory). Mastering a text editor allows you to reach into nearly any corner of the operating system.
 
@@ -117,6 +117,7 @@ Knowing just enough `vi` to open a file, make a change, and save it is an essent
 Unlike a standard word processor or `nano`, **`vi` is modal**. It has completely separate modes for entering text and for issuing commands. The exact same keystroke (like pressing the letter "d") does entirely different things depending on which mode you are currently in. 
 
 Understanding these three modes is the key to mastering `vim`:
+
 1.  **Command Mode (Home Base):** The default mode when `vi` opens. Keystrokes here are interpreted as navigation and editing commands (move the cursor, delete a line, copy text), not as literal text to be typed on the screen.
 2.  **Insert Mode:** The mode where you actually type text into the file. You enter it deliberately from Command mode (e.g., by pressing `i`), and you exit it by pressing **`Esc`**.
 3.  **Line/Execution Mode:** Used for low-level management commands typed at the absolute bottom of the screen. You enter it from Command mode by typing a colon (`:`).
@@ -175,6 +176,8 @@ You can search through massive configuration files rapidly from Command Mode:
 *   **`?pattern`**: Searches *backward* through the document.
 *   **`n`**: Jumps to the **n**ext occurrence of the search match.
 *   **`N`**: Jumps to the previous occurrence of the search match.
+
+![vi Commands](../assets/vi-commands-and-shortcuts.png)
 
 ### Learning More: `vimtutor`
 When you are ready to build muscle memory and move beyond the basics, `vim` includes an excellent built-in, hands-on interactive tutorial. To launch it, open your terminal and type:
@@ -242,13 +245,13 @@ While `emacs` allows standard arrow key navigation, traditional users rely on `C
 | **`C-s`** | **S**earches forward for a specific pattern. |
 | **`C-r`** | Searches **r**everse (backward) for a specific pattern. |
 
-### 4. Learning More: Interactive Tutorial
+### Learning More: Interactive Tutorial
 Like `vim`, `emacs` includes a highly regarded interactive built-in tutorial that walks you through basic operations inside the editor itself. 
 
 Once `emacs` is open, launch the tutorial by typing:
 **`C-h t`** *(Press `Ctrl + h`, release, then type `t`)*
 
-### 5. Setting Your Default Editor (`$EDITOR` and `$VISUAL`)
+### Setting Your Default Editor (`$EDITOR` and `$VISUAL`)
 Here is something that surprises many newcomers: certain Linux utilities open a text editor automatically on your behalf. For example, when you run `crontab -e` to edit scheduled tasks, or when `git commit` prompts you for a message, the system launches an editor in your terminal. 
 
 **On many enterprise systems, the default choice is `vi`.** If you aren't expecting it, suddenly finding yourself trapped inside `vi` can lead directly to panic.
