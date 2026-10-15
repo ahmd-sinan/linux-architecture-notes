@@ -60,12 +60,7 @@ These directories don't physically exist on your hard drive! They are virtual fi
 | :--- | :--- | :--- | :--- |
 | **`/dev`** | Device files. Physical hardware components are interacted with as if they were files. | `/dev/sda1` (Hard drive) | Device Manager |
 | **`/dev/null`** | **(Extra)** The Black Hole. Any output routed here is instantly deleted forever. Used to silence script errors. | `2> /dev/null` | *None* |
-| **`/proc`** | A RAM-based virtual filesystem reporting live data about active process IDs and kernel status. | <ul> <li> `/proc/cpuinfo` — details about the CPU </li>
-<li> `/proc/meminfo` — current memory usage </li>
-<li> `/proc/version` — the running kernel and OS release information </li>
-<li> `/proc/mounts` — the filesystems currently mounted (you used this in Lab 10.1) </li>
-<li> `/proc/<PID>` — a directory for every running process, named by its process ID (the same PIDs you saw in ps and top sections in the previous chapter), containing live details about it </li>
-<li> It also contains `/proc/sys`, a special area exposing tunable kernel settings. Because all of this information is generated only when you ask for it, `/proc` takes up no disk space at all. </li> </ul>  | Task Manager |
+| **`/proc`** | A RAM-based virtual filesystem reporting live data about active process IDs and kernel status. | <ul> <li> `/proc/cpuinfo` — details about the CPU </li><li> `/proc/meminfo` — current memory usage </li><li> `/proc/version` — the running kernel and OS release information </li><li> `/proc/mounts` — the filesystems currently mounted (you used this in Lab 10.1) </li><li> `/proc/<PID>` — a directory for every running process, named by its process ID (the same PIDs you saw in ps and top sections in the previous chapter), containing live details about it </li><li> It also contains `/proc/sys`, a special area exposing tunable kernel settings. Because all of this information is generated only when you ask for it, `/proc` takes up no disk space at all. </li> </ul>  | Task Manager |
 | **`/sys`** | A modern virtual filesystem linking directly to hardware devices. Sysadmins use it to control power states and CPUs. | `/sys/class/net/` | Device Manager Properties |
 | **`/run`** | **(Extra)** Ephemeral runtime data (PIDs, lock files) generated since the machine was turned on. | `/run/systemd/` | *None (Kept in RAM)* |
 
