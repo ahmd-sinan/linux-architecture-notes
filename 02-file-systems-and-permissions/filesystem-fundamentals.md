@@ -55,7 +55,7 @@ Linux treats hardware as files, represented inside the `/dev` directory.
 ### C. Mounting (The Unified Directory Bridge)
 Linux completely rejects the concept of isolated drive letters (like `C:` or `D:`). Instead, a formatted partition is "mounted" (attached) to a specific, existing directory called a **Mount Point**.
 
-![Disk Partition Mapping](disk-partition-mapping.png)
+![Disk Partition Mapping](../assets/disk-partition-mapping.png)
 
 If you mount a drive to `/home`, navigating into `/home` takes you directly into that partition's filesystem. This creates a single, seamless hierarchy. 
 
@@ -78,7 +78,7 @@ Use `$ df -Th` to view mounted filesystems, their storage space, and their Type 
 ### D. Network Filesystems (NFS & Remote Storage)
 A single machine can use multiple filesystem types simultaneously. Linux seamlessly supports mounting storage that lives on entirely different servers across the network, treating them as if they were local directories.
 
-![NFS Architecture](client-server-architecture.png)
+![NFS Architecture](../assets/client-server-architecture.png)
 
 This follows a strict client-server model. The server offers a directory to share (configured in the `/etc/exports` file), and clients mount that shared directory into their own trees. 
 
