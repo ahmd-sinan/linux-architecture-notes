@@ -30,6 +30,9 @@ User isolation is a core security feature of Linux. These directories separate s
 ### System Binaries & The Modern "usrMerge"
 Historically, UNIX physically separated the bare essentials (`/bin`) from general software (`/usr/bin`) due to the small storage sizes of early hard drives. Today, modern distros (Ubuntu, Fedora, Arch) use the **usrMerge**. Physical space is no longer an issue, so all core binaries are moved into `/usr`. The root-level folders are now just **symbolic links** (shortcuts) pointing directly into `/usr`!
 
+> **Tip:**
+> Despite the name, `/usr` is not where users' personal files go (that's `/home`). The name is historical — think of it as "**Unix System Resources**."
+
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
 | **`/usr`** | **U**niversal **S**ystem **R**esources. The massive primary software library containing the bulk of the OS. | N/A | `C:\Program Files` & `C:\Windows` |
