@@ -2,6 +2,9 @@
 
 ## The Core Philosophy
 * **The Root Directory (`/`):** The absolute starting point of the entire operating system. It acts as the trunk of the filesystem tree. Every single folder, application, and attached physical hard drive branches out from this single slash.
+> ⚠️ **Nomenclature Warning (`/` vs. `root`):**
+> The root directory (`/`) is not the same thing as the `root` user. They share the same name due to legacy UNIX tradition, but they are completely different concepts. `/` is the top-level trunk of the structural filesystem tree. `root` is the administrative superuser account with full system privileges.
+
 * **"Everything is a File":** A defining concept of Linux. Text documents, hard drives, keyboards, network sockets, and active system processes are all treated as "files." This allows you to use the exact same commands (`cat`, `echo`, `chmod`) to interact with a text file as you would a physical USB port!
 * **Absolute vs. Relative Paths:** Because everything starts at Root, an *Absolute Path* always starts with `/` (e.g., `/var/log/syslog`), tracing the exact route from the trunk. A *Relative Path* starts from wherever you currently are in the terminal (e.g., `./syslog`).
 

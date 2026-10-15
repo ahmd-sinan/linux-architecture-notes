@@ -11,16 +11,24 @@ In Linux storage management, every drive undergoes a step-by-step initialization
 * **Partitioning (Boundary Lines):** Dividing that raw hardware into addressable, manageable blocks.
 * **Logical (Software):** The underlying software algorithms the operating system uses to organize, index, and retrieve data from those physical blocks.
 
-## The Three Pillars of Linux Storage
+
+## The Four Pillars of Linux Storage
 
 ### A. Partitions (The Physical Block Devices)
-* **What it is:** A defined, contiguous section of your physical storage drive that the operating system manages as an independent block device.
-* **Partition Tables:** Drives use a table to map out these partitions. Older drives use **MBR** (Master Boot Record - 2TB limit), while modern drives use **GPT** (GUID Partition Table - theoretically unlimited size).
-* **Linux Naming Convention:** Linux treats everything as a file, including hardware. Partitions are represented as device files inside the `/dev` directory.
-* **Industry Examples:**
-  * `/dev/sda1`: The first partition on the first SATA drive (Standard SSDs/HDDs).
-  * `/dev/sdb2`: The second partition on the second SATA drive (e.g., a plugged-in USB).
-  * `/dev/nvme0n1p1`: The first partition on an NVMe SSD (The standard for modern, high-speed laptops and servers).
+A partition is a defined, contiguous section of your physical storage drive that the operating system manages as an independent block device. Partitioning allows you to keep different types of data separate (e.g., keeping the OS isolated from user data).
+
+**Standard Partitions You Will Encounter:**
+*   **EFI System Partition (ESP):** A small partition mounted at `/boot/efi`, strictly required for UEFI-based computers to boot.
+*   **Root Partition (`/`):** The main partition holding the operating system, applications, and system files.
+*   **Swap Space:** Storage set aside to act as virtual memory overflow. When physical RAM fills up, the system moves less-active data here.
+    *(Note: Modern distributions often use a "Swap File" sitting on the root filesystem instead of a dedicated partition because it can be dynamically resized without repartitioning.*
+
+**Linux Naming Convention:**
+Linux treats hardware as files, represented inside the `/dev` directory.
+*   `/dev/sda1`: The first partition on the first SATA drive (Standard SSDs/HDDs).
+*   `/dev/sdb2`: The second partition on the second SATA drive (e.g., a plugged-in USB)
+*   `/dev/nvme0n1p1`: The first partition on an NVMe SSD (The standard for modern, high-speed laptops and servers).
+
 > 💻 **SysAdmin Command:** Run `lsblk` (List Block Devices) to view all connected physical drives and their partitions!
 
 ### B. Filesystems (The Logical Data Structures)
@@ -33,9 +41,10 @@ In Linux storage management, every drive undergoes a step-by-step initialization
 
 **Industry Standards by OS:**
 * **Linux Standards:** 
-  * `ext4` (Fourth Extended Filesystem): The absolute standard, highly stable default for most Linux distributions (Ubuntu, Debian).
-  * `XFS`: A high-performance filesystem optimized for massive files and parallel I/O operations (RHEL default).
-  * `Btrfs`: A modern, advanced filesystem featuring built-in snapshotting and drive pooling.
+  *   **`ext4` (Fourth Extended Filesystem):** The rock-solid, long-standing default on **Ubuntu and Debian**.
+  *   **`XFS`:** High-performance, scalable enterprise standard. Default on **RHEL, CentOS Stream, and Rocky Linux**.
+  *   **`Btrfs`:** Modern filesystem featuring self-healing data checksums and built-in volume management. Default on **Fedora and openSUSE**.
+  *   **`squashfs`:** A compressed, strictly read-only filesystem. Used extensively for live installer USBs and containerized software packages (like Ubuntu Snaps).
 * **Windows Standard:** `NTFS` (New Technology File System).
 * **Apple/macOS Standards:** `APFS` (Modern standard optimized for SSDs) and `HFS+` (Older legacy standard).
 * **Universal (Portable Storage):**
@@ -44,11 +53,39 @@ In Linux storage management, every drive undergoes a step-by-step initialization
 > 💻 **SysAdmin Command:** Run `sudo mkfs.ext4 /dev/sdb1` to format a partition with the ext4 filesystem.
 
 ### C. Mounting (The Unified Directory Bridge)
-* **What it is:** The process of taking a formatted partition and attaching it to a specific, existing directory within the Linux file tree.
-* **How it works:** Linux completely rejects the concept of isolated drive letters (like `C:` or `D:`). Instead of having separate domains, a disk is "mounted" to a specific directory called a **Mount Point**. 
-* **The Result:** If you mount a 2TB hard drive (`/dev/sdb1`) to `/mnt/database`, any file saved inside `/mnt/database` is physically written to that second drive. The user simply experiences one massive, unified file tree (`/`) regardless of how many physical disks are attached!
-* **Persistence (`/etc/fstab`):** Manual mounts disappear when the computer restarts. To make a mount permanent, backend engineers add the drive's UUID to the `/etc/fstab` (File System Table) configuration file.
-> 💻 **SysAdmin Command:** Run `sudo mount /dev/sdb1 /mnt/database` to attach the drive, and `df -h` to see all active mounted drives and their free space. to deattach type `sudo umount /mnt/database`
+Linux completely rejects the concept of isolated drive letters (like `C:` or `D:`). Instead, a formatted partition is "mounted" (attached) to a specific, existing directory called a **Mount Point**.
+
+![Disk Partition Mapping](disk-partition-mapping.png)
+
+If you mount a drive to `/home`, navigating into `/home` takes you directly into that partition's filesystem. This creates a single, seamless hierarchy. 
+
+**Mounting and Unmounting:**
+*   `$ sudo mount /dev/sda5 /home`: Attaches the partition.
+*   `$ sudo umount /home`: Detaches the partition (Note the spelling: `umount`, not `unmount`).
+
+> ⚠️ **Mounting Over Existing Data:**
+> If you mount a filesystem onto a directory that already contains files, those original files are not deleted; they are simply hidden behind the newly attached filesystem until you unmount it. Always mount to empty directories!
+
+**Persistence and UUIDs (`/etc/fstab`):**
+Manual mounts disappear on reboot. To make a mount permanent, you add an entry to `/etc/fstab` (Filesystem Table). 
+
+Modern systems do not use device names (like `/dev/sda5`) in `fstab` because device names can change if you plug in a new USB drive. Instead, they use a **UUID (Universally Unique Identifier)**, a permanent label assigned directly to the filesystem. 
+*   *Find a UUID using:* `$ blkid`
+
+**Viewing Mounted Drives:**
+Use `$ df -Th` to view mounted filesystems, their storage space, and their Type (`-T`). You will often see `tmpfs` entries; these are not real disks, but areas of system RAM presented as filesystems for temporary, ephemeral data.
+
+### D. Network Filesystems (NFS & Remote Storage)
+A single machine can use multiple filesystem types simultaneously. Linux seamlessly supports mounting storage that lives on entirely different servers across the network, treating them as if they were local directories.
+
+![NFS Architecture](client-server-architecture.png)
+
+This follows a strict client-server model. The server offers a directory to share (configured in the `/etc/exports` file), and clients mount that shared directory into their own trees. 
+
+*   **NFS (Network File System):** The standard protocol for sharing directories over a Linux/UNIX network (e.g., centralizing `/home` directories across a company).
+*   **SMB / CIFS (Samba):** The standard network file-sharing protocol for Windows environments, which Linux can interface with using Samba software.
+*   **Enterprise Distributed Storage:** Technologies like **Ceph** (cloud object storage), **Lustre** (supercomputing clusters), and **OpenAFS** (wide-area networks) are used for massive cloud infrastructure.
+
 
 ## Cloud Context: LVM (Logical Volume Management) ☁️
 In cloud engineering, physical partitions are often too rigid. You can't easily resize them while the server is running. 
