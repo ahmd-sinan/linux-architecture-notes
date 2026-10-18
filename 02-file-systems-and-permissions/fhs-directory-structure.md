@@ -30,22 +30,25 @@ User isolation is a core security feature of Linux. These directories separate s
 ### System Binaries & The Modern "usrMerge"
 Historically, UNIX physically separated the bare essentials (`/bin`) from general software (`/usr/bin`) due to the small storage sizes of early hard drives. Today, modern distros (Ubuntu, Fedora, Arch) use the **usrMerge**. Physical space is no longer an issue, so all core binaries are moved into `/usr`. The root-level folders are now just **symbolic links** (shortcuts) pointing directly into `/usr`!
 
+> **Tip:**
+> Despite the name, `/usr` is not where users' personal files go (that's `/home`). The name is historical — think of it as "**Unix System Resources**."
+
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
 | **`/usr`** | **U**niversal **S**ystem **R**esources. The massive primary software library containing the bulk of the OS. | N/A | `C:\Program Files` & `C:\Windows` |
-| **`/bin`** | Essential, everyday binary executables (commands) available to all users. | `ls`, `cat`, `mkdir`, `cp` | `System32` (Commands) |
-| **`/sbin`** | System binaries (admin tools) generally requiring `root`/`sudo` privileges to execute. | `fdisk`, `iptables`, `reboot` | `System32` (Admin Tools) |
-| **`/lib`** | Shared library files (`.so` files) required by the programs running in `bin` and `sbin` so they don't duplicate code. | `libc.so.6` | `.dll` files |
+| **`/bin`** | Essential, everyday binary executables (commands) available to all users.<br><br>`/usr/bin`this is the actual location that `/bin` link to. | `ls`, `cat`, `mkdir`, `cp` | `System32` (Commands) |
+| **`/sbin`** | System binaries (admin tools) generally requiring `root`/`sudo` privileges to execute.<br><br>`/usr/sbin`this is the actual location that `/sbin` link to | `fdisk`, `iptables`, `reboot` | `System32` (Admin Tools) |
+| **`/lib`** and **`/lib64`** | `/lib` (and, on 64-bit systems, `/lib64`) holds shared libraries: reusable chunks of code that many programs rely on, rather than each program carrying its own copy. When you run a command from `/bin`, it often pulls in supporting code from here to do its work. Kernel modules (the device drivers Linux loads for your hardware) also live here, under `/lib/modules`. <br>As with `/bin` and `/sbin`, on modern systems `/lib` itself is a symbolic link to `/usr/lib`, so everything here — libraries and modules alike — actually resides under `/usr/lib`.<br><br>Linux shared libraries usually end in `.so` ("shared object"), the same idea as Windows `.dll` or macOS `.dylib` files: common code shared among many applications. | `libc.so.6` (Core C library)<br><br>`/lib/modules/` (Hardware drivers)<br><br>**Tip:** *If a program fails to launch complaining about a missing `.so` file, this is the directory where the system is looking for it!* | `.dll` files in `C:\Windows\System32`<br><br>& `C:\Windows\System32\drivers` |
 | **`/usr/local`** | The DIY Directory! If you manually compile software from source code instead of using `apt`/`dnf`, it goes here to prevent conflicts. | `/usr/local/bin` | Custom `C:\` Installs |
-| **`/usr/share`** | **(Extra)** Architecture-independent data used by programs, like icons, fonts, dictionaries, and `man` pages. | `/usr/share/fonts` | `C:\Windows\Fonts` |
+| **`/usr/share`** | Architecture-independent data used by programs, like icons, fonts, dictionaries, and `man` pages. | `/usr/share/fonts` | `C:\Windows\Fonts` |
 
 ### Configuration and State Management
 This is the central nervous system of your server. These directories manage how the system boots, who has access, and track everything that happens while the server is actively running.
 
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
-| **`/etc`** | The central hub for global system configurations. Almost everything here is a plain text file you can edit with `nano` or `vim`. | `/etc/passwd`, `/etc/fstab` | The Registry |
-| **`/var`** | Variable data. Unlike `/usr` (which is static), files here are constantly changing, growing, and adapting while the system runs. | `/var/www/html` (Web files) | `C:\ProgramData` |
+| **`/etc`** | The central hub for global system configurations. : the settings that control how the system and its services behave. Almost everything here is a plain text file you can edit with `nano` or `vim`. | `/etc/passwd`, `/etc/fstab` | The Registry |
+| **`/var`** | `/var` (short for variable) holds files whose contents are expected to grow and change as the system runs. Classic examples include log files under `/var/log`, which record what the system and its services are doing; this is often the first place you look when troubleshooting. | `/var/www/html` (Web files) | `C:\ProgramData` |
 | **`/var/log`** | **(Extra)** The master log directory. If an application crashes, or a hacker tries to SSH into your server, it is logged here. | `/var/log/syslog` | Event Viewer Logs |
 | **`/var/cache`** | **(Extra)** Cached data from applications (like the `apt` package manager storing downloaded `.deb` files). | `/var/cache/apt/` | `AppData` Caches |
 | **`/var/spool`** | **(Extra)** Queued tasks waiting to be processed, like print jobs or scheduled `cron` jobs. | `/var/spool/cron` | `C:\Windows\System32\spool` |
@@ -55,19 +58,18 @@ These directories don't physically exist on your hard drive! They are virtual fi
 
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
-| **`/dev`** | Device files. Physical hardware components are interacted with as if they were files. | `/dev/sda1` (Hard drive) | Device Manager |
-| **`/dev/null`** | **(Extra)** The Black Hole. Any output routed here is instantly deleted forever. Used to silence script errors. | `2> /dev/null` | *None* |
-| **`/proc`** | A RAM-based virtual filesystem reporting live data about active process IDs and kernel status. | `/proc/cpuinfo` | Task Manager |
-| **`/sys`** | A modern virtual filesystem linking directly to hardware devices. Sysadmins use it to control power states and CPUs. | `/sys/class/net/` | Device Manager Properties |
-| **`/run`** | **(Extra)** Ephemeral runtime data (PIDs, lock files) generated since the machine was turned on. | `/run/systemd/` | *None (Kept in RAM)* |
+| **`/dev`** | Device files. Physical hardware components are interacted with as if they were files.<br>Means, `/dev` contains device nodes, which are special files that represent the hardware and devices attached to your system.   Your disks, terminals, and other devices appear here as file-like entries that programs can read from and write to. <br><br><ul><li>**`/dev/sda1`** — the first partition on the first disk</li><li>**`/dev/null`** — The Black Hole. Any output routed here is instantly deleted forever. Used to silence script errors.</li></ul><br><br>The entries in `/dev` are created and managed automatically by a system called `udev`, which adds and removes them as devices come and go. This is how, for example, a USB stick's device node appears the moment you plug it in. | `/dev/sda1` (Hard drive) | Device Manager |
+| **`/proc`** | A RAM-based virtual filesystem reporting live data about active process IDs and kernel status.<br><br>Means, `/proc` is a pseudo-filesystem: it doesn't hold real files stored on any disk. Instead, its contents are generated on the fly by the kernel, in memory, and presented **as if** they were files.<br><br><br>*Think of `/proc` as a live dashboard for the running system, dressed up as ordinary files so you can read it with the same tools (`cat`, `less`) you'd use on anything else. For example, running the `cat /proc/version` command shows exactly which kernel your system is running.* | <ul><li> `/proc/cpuinfo` — details about the CPU </li><li> `/proc/meminfo` — current memory usage </li><li> `/proc/version` — the running kernel and OS release information </li><li> `/proc/mounts` — the filesystems currently mounted (you used this in Lab 10.1) </li><li> `/proc/<PID>` — a directory for every running process, named by its process ID, containing live details about it </li><li> It also contains `/proc/sys`, a special area exposing tunable kernel settings. Because all of this information is generated only when you ask for it, `/proc` takes up no disk space at all. </li> </ul>  | Task Manager |
+| **`/sys`** | A modern virtual filesystem linking directly to hardware devices. Sysadmins use it to control power states and CPUs.<br><br>Like `/proc`, this is a pseudo-filesystem exposing information about devices and the kernel. | `/sys/class/net/` | Device Manager Properties |
 
 ### Mounting, External Storage & Recovery
-Because Linux doesn't use Drive Letters (`D:` or `E:`), external storage and secondary hard drives must be physically "mounted" (attached) to specific folders in the filesystem to be accessed.
+`/media`, `/run`, and `/mnt` - These three directories are where other filesystems get attached to the tree. Because Linux doesn't use Drive Letters (`D:` or `E:`), external storage and secondary hard drives must be physically "mounted" (attached) to specific folders in the filesystem to be accessed.
 
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
-| **`/media`** | Automated mounts. Modern Desktop Environments automatically mount USBs or DVDs dynamically here. | `/media/student/USB_DRIVE` | `D:\` or `E:\` Drive |
-| **`/mnt`** | Manual mounts. The traditional directory used by SysAdmins to attach massive Cloud Block Storage volumes. | `/mnt/database_backup` | NTFS Mount Points |
+| **`/media`** | Where removable media (USB drives, SD cards, DVDs) are mounted automatically by the desktop, usually under `/media/<username>/<drive-name>`. | `/media/student/USB_DRIVE` | `D:\` or `E:\` Drive |
+| **`/run`** |  A memory-based area for runtime data that programs need while the system is running (and, on some systems, where removable media mounts as `/run/media/<username>/...`). It's cleared on every reboot. |  `/run/systemd/`<br><br>`/run/docker.sock` (Docker communication socket) or `/run/sshd.pid` (process ID).<br><br>**Tip:** *It uses a `tmpfs` (RAM disk), meaning data is read/written at lightning speed but vanishes completely on shutdown!* | Named Pipes (`\\.\pipe\`) / Volatile Registry Keys |
+| **`/mnt`** | Manual mounts. The traditional directory used by SysAdmins to attach massive Cloud Block Storage volumes.<br><br>Means,  a traditional, generic spot for **temporarily** mounting a filesystem by hand. If you're manually mounting something just to poke at it, `/mnt` is the conventional place. | `/mnt/database_backup` | NTFS Mount Points |
 | **`/lost+found`** | The Recovery Room. If a sudden power outage corrupts a drive, the `fsck` tool dumps recovered file fragments here! | Created on every `ext4` drive | `found.000` (Chkdsk) |
 
 ### Bootloader, Temp, & Third-Party
@@ -75,7 +77,7 @@ The final critical pieces of the puzzle, holding everything from the initial boo
 
 | Directory | What it is (Technical Function) | Industry Examples / Tips | Windows Equivalent |
 | :--- | :--- | :--- | :--- |
-| **`/boot`** | The absolute minimum static files required to start the OS before the filesystem loads (Kernel `vmlinuz`, GRUB). | `/boot/grub/grub.cfg` | EFI System Partition / `C:\Boot` |
-| **`/tmp`** | A scratchpad for applications to store temporary data. **Warning:** Usually wiped completely clean on reboot! | Temporary session caches | `C:\Windows\Temp\` |
+| **`/boot`** | The absolute minimum static files required to start the OS before the filesystem loads (Kernel `vmlinuz`, GRUB).<br><br>Means, `/boot` contains everything the computer needs during the earliest stage of booting, before the main system is running.<br>The two key pieces are the Linux kernel itself (the file is usually named something like `vmlinuz`) and the `initramfs` (an initial RAM disk that helps get the system started). You'll also find the bootloader's configuration here, typically GRUB's, along with the EFI System Partition mounted at `/boot/efi` on modern UEFI machines.<br><br><h5>Handle with care:</h5> *This directory holds the files that make your system bootable. It's fine to look, but it's not a place to delete or rename things casually.* | `/boot/grub/grub.cfg` | EFI System Partition / `C:\Boot` |
+| **`/tmp`** | A scratchpad for applications to store temporary data. <br>**Warning:** Usually wiped completely clean on reboot! | Temporary session caches | `C:\Windows\Temp\` |
 | **`/opt`** | **Opt**ional Software. Where massive standalone third-party apps (Docker, Chrome) install to avoid cluttering `/usr`. | `/opt/google/chrome` | `C:\Program Files` |
 | **`/srv`** | **Srv**ice Data. If your machine acts as a web/FTP server, the data actively served to the world is traditionally placed here. | `/srv/ftp/` | `C:\inetpub\wwwroot` |
