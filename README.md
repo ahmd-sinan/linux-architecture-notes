@@ -24,6 +24,7 @@ The documentation here is organized into logical, numbered directories to keep t
 | :--- | :--- | :--- |
 | `filesystem-fundamentals.md` | Deep dive into storage architecture: Partitions, Filesystems (`ext4`, `XFS`), Inodes, Mounting (`fstab`), and Cloud LVM concepts. | [Read Note](./02-file-systems-and-permissions/filesystem-fundamentals.md) |
 | `fhs-directory-structure.md` | Complete breakdown of the Filesystem Hierarchy Standard, the usrMerge, and root directories (`/etc`, `/var`, `/dev`). | [Read Note](./02-file-systems-and-permissions/fhs-directory-structure.md) |
+| `file-comparison-and-identification.md` | Utilities for comparing text files (`diff`), sharing code changes via patches (`patch`, `diff3`), and identifying true file formats using content signatures (`file`) | [Read Note](./02-file-systems-and-permissions/file-comparison-and-identification.md) |
 | - | - | - |
 
 ### 📁 `/03-Command-Line-Mastery`
