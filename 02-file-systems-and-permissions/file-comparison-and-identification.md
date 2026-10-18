@@ -6,7 +6,7 @@ This document covers the everyday utilities used to compare text, apply patches,
 
 ---
 
-## 1. Comparing Text Files (`diff`)
+## Comparing Text Files (`diff`)
 
 The `diff` command is the standard UNIX tool for comparing two text files line-by-line. It pinpoints exactly what changed between them, which is critical when verifying changes made to a configuration file (e.g., `/etc/ssh/sshd_config` vs `/etc/ssh/sshd_config.bak`).
 
@@ -55,7 +55,7 @@ If you prefer a visual, side-by-side comparison with color highlighting (similar
 - `vimdiff` (Terminal-based side-by-side using Vim)
 - `diffuse`
 
-## 2. Collaboration: Patches and `diff3`
+## Collaboration: Patches and `diff3`
 In the Linux and open-source development world, if you change 5 lines in a 10,000-line source code file, it is wildly inefficient to send the entire new file to your team. Instead, you share a Patch.
 
 ### The `patch` Workflow
@@ -83,7 +83,7 @@ $ diff3 MY-FILE COMMON-FILE YOUR-FILE`
 
 `diff3` compares three files at once to show how each person's version departed from the common starting point. This specific logic is the mathematical foundation of modern collaboration tools like `git merge`.
 
-## 3. Identifying True File Types (file)
+## Identifying True File Types (file)
 On Linux, a file's extension is purely cosmetic.
 
 In Windows, the OS relies heavily on extensions; a file ending in `.exe` is executed, and `.txt` is opened in Notepad. On Linux, you could easily name an executable binary program `report.txt` or a text file `data.exe`, and the kernel would not care. Extensions are just a convenience for the human reading them.
