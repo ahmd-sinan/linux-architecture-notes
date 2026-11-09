@@ -75,7 +75,7 @@ The `patch` command reads this difference file and automatically injects those e
 $ patch original.c < fix.patch
 patching file original.c
 ```
-### Three-Way Merges (diff3)
+### Three-Way Merges (`diff3`)
 When two developers independently edit the exact same original file, you must figure out how their respective versions diverged.
 ```bash
 $ diff3 MY-FILE COMMON-FILE YOUR-FILE`
