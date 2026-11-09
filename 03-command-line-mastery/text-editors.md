@@ -4,7 +4,7 @@ If there is one habit that quietly runs through everything you do in Linux, it i
 
 ---
 
-## Part 1: Philosophy & Overview
+## Philosophy & Overview
 
 ### The Philosophy of Plain Text
 It is critical to understand the architectural distinction between a **Plain-Text Editor** and a **Word Processor**. 
@@ -41,7 +41,7 @@ For quick file creation or automated shell scripting, you do not need to open a 
 
 ---
 
-## Part 2: Everyday Text Editing (Nano, GUI, VS Code)
+## Basic Editors (Nano, GUI, VS Code)
 
 Not every editing task requires the depth of an advanced, infinitely customizable editor like Vim or Emacs. Far more often, you just need to jot down notes, tweak a configuration file, or fix a line in a script. This section covers the highly accessible, everyday editors that allow you to be instantly productive.
 
@@ -102,7 +102,7 @@ Once installed, you can open an entire folder of code directly from the terminal
 
 ---
 
-## Part 3: Advanced Text Editors (`vi` / `vim`)
+## Advanced Text Editors (`vi` / `vim`)
 
 Alongside approachable editors like `nano`, you will encounter two long-established, highly powerful editors in the Linux world: `vi` and `emacs`. 
 
@@ -189,7 +189,7 @@ This opens a temporary text file containing an interactive lesson that teaches y
 
 ---
 
-## Part 4: Advanced Text Editors (`emacs`) & Variables
+## Advanced Text Editors (`emacs`) & Variables
 
 While `vi` is the undisputed king of pre-installed ubiquity, `emacs` is the other classic UNIX text editor. It has a massive, loyal community and is essentially an entire computing environment built around a text editor. 
 
