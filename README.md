@@ -36,6 +36,7 @@ The documentation here is organized into logical, numbered directories to keep t
 | `file-searching-and-filtering.md` | Master filesystem navigation and text filtering. Covers database-driven searches (`locate`), advanced `grep` pipelines, shell wildcards, and real-time deep scanning with `find` (security auditing, logical operators, and `-exec` automation). | [Read Note](./03-command-line-mastery/file-searching-and-filtering.md) |
 | `system-documentation.md` | Comprehensive guide to Linux help systems: navigating `man` pages (sections 1-9), GNU `info` nodes, shell built-in `help`, standard `--help` flags, and local package documentation (`/usr/share/doc`). | [Read Note](./03-command-line-mastery/system-documentation.md) |
 | `text-editors.md` | Comprehensive guide to Linux text editing. Covers plain-text philosophy, basic CLI file creation, everyday editors (`nano`, GUI, VS Code), and advanced survival guides for `vim` (modal editing) and `emacs`, plus `$EDITOR` configuration. | [Read Note](./03-command-line-mastery/text-editors.md) |
+| `data-backup-and-cloning.md` | Data management fundamentals: local vs network syncing (`rsync`), directory archiving (`tar`), compression formats (`gzip`, `xz`), and low-level raw disk copying (`dd`). | [Read Note](./03-command-line-mastery/data-backup-and-cloning.md)
 | - | - | - |
 
 ### 📁 `/04-Process-and-Service-Management`
