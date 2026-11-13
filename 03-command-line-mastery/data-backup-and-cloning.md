@@ -22,7 +22,7 @@ For backing up whole directory trees, especially repeatedly, `rsync` is the indu
 * **Network Capable:** `rsync` tunnels through SSH to securely sync files to and from completely different machines.
 
 #### Basic Local Sync:
-The `-a` (archive) flag preserves permissions, ownership, timestamps, and symbolic links. The `-v` (verbose) flag shows what is being copied in real time.
+The `-a` (archive) flag preserves permissions, ownership, timestamps, and symbolic links. The `-v` (verbose) flag shows what is being copied in real time
 
 ```Bash
 $ rsync -av /home/student/project/ /backup/project/
