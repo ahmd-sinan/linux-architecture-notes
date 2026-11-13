@@ -6,7 +6,7 @@ This document covers the complete spectrum of data management: from everyday fil
 
 ---
 
-## 1. Backing Up Data (`cp` vs `rsync`)
+## Backing Up Data (`cp` vs `rsync`)
 
 ### `cp` (Quick Local Copies)
 The `cp` command copies files and directories from one place to another on the local machine. To copy a whole directory, add the `-r` (recursive) option.
@@ -49,7 +49,7 @@ $ rsync -av --delete /home/student/project/ /backup/project/
 ```
 Because `--delete` can permanently wipe out directories if pointed at the wrong path, always test your syntax first using `--dry-run`. This simulates the exact operation and prints out what would happen without actually modifying any data.
 
-## 2. File Compression (`gzip`, `bzip2`, `xz`, `zip`)
+## File Compression (`gzip`, `bzip2`, `xz`, `zip`)
 Compression tools trade off along one main axis: how much space they save versus how long they take to run.
 
 ### Compression Performance Comparison
@@ -72,7 +72,7 @@ Compressing a file replaces the original with the compressed version.
 *(Note on `xz` Security: In 2024, a serious backdoor [CVE-2024-3094] was discovered hidden in the `xz` library by a malicious contributor. It was caught early, but remains a historic reminder to keep systems updated.)*
 
 
-## 3. Archiving with `tar`
+## Archiving with `tar`
 Utilities like `gzip` and `xz` only compress single files. To bundle an entire directory of multiple files into a single package, you use `tar` (*Tape Archive*). `tar` creates "tarballs" and can simultaneously hand the bundle off to a compression tool (creating `.tar.gz` or `.tar.xz`).
 
 **Essential tar Flags:**
